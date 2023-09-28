@@ -1,9 +1,11 @@
 package ngoc.webbansach_backend.dao;
 
 import ngoc.webbansach_backend.entity.DonHang;
+import ngoc.webbansach_backend.entity.SachYeuThich;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface DonHangRepository extends JpaRepository<DonHang, Integer> {
+@RepositoryRestResource
+public interface SachYeuThichRepository extends JpaRepository<SachYeuThich, Integer> {
 }
