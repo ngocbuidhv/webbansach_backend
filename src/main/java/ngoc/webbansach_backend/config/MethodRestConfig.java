@@ -15,12 +15,20 @@ import static org.aspectj.weaver.loadtime.definition.Definition.DeclareAnnotatio
 
 @Configuration
 public class MethodRestConfig implements RepositoryRestConfigurer {
-    private String url = "http://localhost:8080";
+    private String url = "http://localhost:3000";
 
     @Autowired
     private EntityManager entityManager;
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
+        // cho phep id trong khi tra ve json
+        config.exposeIdsFor(entityManager.getMetamodel().getEntities().stream().map(jakarta.persistence.metamodel.Type::getJavaType).toArray(Class[]::new));
+        // cors configuration
+        cors.addMapping("/**")
+                .allowedOrigins(url)
+                .allowedMethods("GET", "POST", "PUT", "DELETE");
+
+        // chặn các methods
         HttpMethod[] chanCacPhuongThuc = {
                 HttpMethod.POST,
                 HttpMethod.PUT,
@@ -29,16 +37,15 @@ public class MethodRestConfig implements RepositoryRestConfigurer {
         };
 
         // export id;
-        // cho phep id trong khi tra ve json
-        config.exposeIdsFor(entityManager.getMetamodel().getEntities().stream().map(jakarta.persistence.metamodel.Type::getJavaType).toArray(Class[]::new));
+
 //        config.exposeIdsFor(TheLoai.class);
 
-//        disableHttpMethods(TheLoai.class, config, chanCacPhuongThuc);
+        disableHttpMethods(TheLoai.class, config, chanCacPhuongThuc);
 //
-//        HttpMethod[] phuongThucDelete = {
-//                HttpMethod.DELETE
-//        };
-//        disableHttpMethods(NguoiDung.class, config, phuongThucDelete);
+        HttpMethod[] phuongThucDelete = {
+                HttpMethod.DELETE
+        };
+        disableHttpMethods(NguoiDung.class, config, phuongThucDelete);
     }
 
     private void disableHttpMethods(Class c, RepositoryRestConfiguration config,
