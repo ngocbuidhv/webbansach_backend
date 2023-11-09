@@ -28,24 +28,24 @@ public class MethodRestConfig implements RepositoryRestConfigurer {
                 .allowedOrigins(url)
                 .allowedMethods("GET", "POST", "PUT", "DELETE");
 
-        // chặn các methods
-        HttpMethod[] chanCacPhuongThuc = {
-                HttpMethod.POST,
-                HttpMethod.PUT,
-                HttpMethod.PATCH,
-                HttpMethod.DELETE,
-        };
-
-        // export id;
-
-//        config.exposeIdsFor(TheLoai.class);
-
-        disableHttpMethods(TheLoai.class, config, chanCacPhuongThuc);
+//        // chặn các methods
+//        HttpMethod[] chanCacPhuongThuc = {
+//                HttpMethod.POST,
+//                HttpMethod.PUT,
+//                HttpMethod.PATCH,
+//                HttpMethod.DELETE,
+//        };
 //
-        HttpMethod[] phuongThucDelete = {
-                HttpMethod.DELETE
-        };
-        disableHttpMethods(NguoiDung.class, config, phuongThucDelete);
+//        // export id;
+//
+////        config.exposeIdsFor(TheLoai.class);
+//
+//        disableHttpMethods(TheLoai.class, config, chanCacPhuongThuc);
+////
+//        HttpMethod[] phuongThucDelete = {
+//                HttpMethod.DELETE
+//        };
+//        disableHttpMethods(NguoiDung.class, config, phuongThucDelete);
     }
 
     private void disableHttpMethods(Class c, RepositoryRestConfiguration config,
