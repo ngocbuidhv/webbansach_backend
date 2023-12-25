@@ -1,5 +1,6 @@
-package ngoc.webbansach_backend.service;
+package ngoc.webbansach_backend.service.nguoidung;
 
+import jakarta.transaction.Transactional;
 import ngoc.webbansach_backend.dao.NguoiDungRepository;
 import ngoc.webbansach_backend.dao.QuyenRepository;
 import ngoc.webbansach_backend.entity.NguoiDung;
@@ -12,7 +13,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.xml.catalog.CatalogException;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,8 +37,49 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public List<NguoiDung> findListNguoiDung() {
+        return nguoiDungRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public NguoiDung themNguoiDung(NguoiDung nguoiDung) {
+        return nguoiDungRepository.save(nguoiDung);
+    }
+
+    @Override
+    @Transactional
+    public NguoiDung updateNguoiDung(int maNguoiDung, NguoiDung nguoiDung) {
+        Optional<NguoiDung> nguoiDungUpdate = nguoiDungRepository.findById(maNguoiDung);
+        if (nguoiDungUpdate.isEmpty()) {
+            throw new CatalogException("Mã sách" + maNguoiDung + " không thể thực hien update!");
+        }
+        try {
+            NguoiDung nguoiDungUpdateNguoiDung = nguoiDungUpdate.get();
+            nguoiDungUpdateNguoiDung.setHoDem(nguoiDung.getHoDem());
+            return nguoiDungRepository.save(nguoiDungUpdateNguoiDung); // Save the updated object, not the original one
+        } catch (Exception ex) {
+            throw new RuntimeException("Sách không thể update");
+        }
+    }
+
+    @Override
+    @Transactional
+    public void Delete(int maNguoiDung) {
+        Optional<NguoiDung> nguoiDungDelete = nguoiDungRepository.findById(maNguoiDung);
+        if(nguoiDungDelete.isEmpty()){
+            throw new CatalogException("Mã sách " + maNguoiDung + " không tồn tại!");
+        }
+        try {
+            nguoiDungRepository.delete(nguoiDungDelete.get());
+        } catch (Exception ex){
+            throw new RuntimeException("Sách không thể xóa");
+        }
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        NguoiDung nguoiDung = nguoiDungRepository.findByTenDangNhap(username);
+        NguoiDung nguoiDung = findByUsername(username);
         if(nguoiDung==null){
             throw new UsernameNotFoundException("Tài khoản đã tồn tại");
         }
@@ -44,4 +89,5 @@ public class UserServiceImpl implements UserService{
         private Collection<? extends  GrantedAuthority > rolesToAuthorities(Collection<Quyen> quyens){
             return quyens.stream().map(quyen -> new SimpleGrantedAuthority(quyen.getTenQuyen())).collect(Collectors.toList());
         }
+
 }
