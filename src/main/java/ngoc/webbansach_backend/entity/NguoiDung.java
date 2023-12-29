@@ -26,7 +26,7 @@ public class NguoiDung {
     private String matKhau;
 
     @Column(name = "gioi_tinh")
-    private char gioiTinh;
+    private String gioiTinh;
 
     @Column(name = "email")
     private String email;
@@ -46,6 +46,10 @@ public class NguoiDung {
     @Column(name = "ma_kich_hoat")
     private String maKichHoat;
 
+    @Column(name = "avatar", columnDefinition = "LONGTEXT")
+    @Lob
+    private String avatar;
+
     @OneToMany(mappedBy = "nguoiDung",
             fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}
@@ -59,7 +63,7 @@ public class NguoiDung {
     private List<SachYeuThich> danhSachSachYeuThich;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH
+            CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.REMOVE
     })
     @JoinTable(
             name = "nguoidung_quyen",
@@ -115,11 +119,11 @@ public class NguoiDung {
         this.matKhau = matKhau;
     }
 
-    public char getGioiTinh() {
+    public String getGioiTinh() {
         return gioiTinh;
     }
 
-    public void setGioiTinh(char gioiTinh) {
+    public void setGioiTinh(String gioiTinh) {
         this.gioiTinh = gioiTinh;
     }
 

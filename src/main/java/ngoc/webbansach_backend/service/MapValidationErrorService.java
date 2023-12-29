@@ -1,4 +1,4 @@
-package demo.SpringShopBE.service;
+package ngoc.webbansach_backend.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

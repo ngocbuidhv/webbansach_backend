@@ -17,7 +17,7 @@ public class Quyen {
     private String tenQuyen;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH
+            CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.REMOVE
     })
     @JoinTable(
             name = "nguoidung_quyen",

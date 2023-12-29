@@ -17,7 +17,7 @@ public class HinhAnh {
     private String tenHinhAnh;
 
     @Column(name = "la_icon") //tiny int
-    private boolean laIcon;
+    private String laIcon;
 
     @Column(name = "duong_dan")
     private String duongDan;

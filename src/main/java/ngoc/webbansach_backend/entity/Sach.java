@@ -3,6 +3,7 @@ package ngoc.webbansach_backend.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 @Entity
 @Data
@@ -36,6 +37,18 @@ public class Sach {
 
     @Column(name = "trung_binh_xep_hang")
     private Double trungBinhXepHang;
+
+    @Column(name = "so_trang")
+    private int soTrang;
+
+    @Column(name = "ngon_ngu")
+    private String ngonNgu;
+    @Column(name = "nam_xb")
+    private int namXB;
+
+    @Column(name = "mo_ta_chi_tiet", columnDefinition = "LONGTEXT")
+    @Lob
+    private String moTaChiTiet;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH

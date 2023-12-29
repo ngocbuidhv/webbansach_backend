@@ -10,10 +10,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 @RestController
-public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+public class CustomSachEntityExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(SachException.class)
     public final ResponseEntity<Object> handleCategoryException(SachException ex, WebRequest request){
-        CategoryExceptionResponse exceptionResponse = new CategoryExceptionResponse(ex.getMessage());
+        SachExceptionResponse exceptionResponse = new SachExceptionResponse(ex.getMessage());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 

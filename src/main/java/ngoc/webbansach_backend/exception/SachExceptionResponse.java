@@ -3,10 +3,10 @@ package ngoc.webbansach_backend.exception;
 import lombok.Data;
 
 @Data
-public class CategoryExceptionResponse {
+public class SachExceptionResponse {
     private String message;
 
-    public CategoryExceptionResponse(String message) {
+    public SachExceptionResponse(String message) {
         this.message = message;
     }
 }

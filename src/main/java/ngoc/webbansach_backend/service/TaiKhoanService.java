@@ -3,6 +3,7 @@ package ngoc.webbansach_backend.service;
 import ngoc.webbansach_backend.dao.NguoiDungRepository;
 import ngoc.webbansach_backend.entity.NguoiDung;
 import ngoc.webbansach_backend.entity.ThongBao;
+import ngoc.webbansach_backend.service.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -59,11 +60,13 @@ public class TaiKhoanService {
         String subject = "Kích hoạt tài khoản của bạn tại WebBanSach";
         String text = "Vui lòng sử dụng mã sau để kich hoạt cho tài khoản <" + email + ">:<html><body><br/><h1>" + maKichHoat + "</h1></body></html>";
         text += "<br/> Click vào đường link để kích hoạt tài khoản: ";
+//        String url = "http://localhost:3000/kich-hoat/" + email + "/" + maKichHoat;
         String url = "http://localhost:3000/kich-hoat/" + email + "/" + maKichHoat;
         text += ("<br/> <a href=" + url + ">" + url + "</a> ");
 
-        emailService.sendMessage("tunletest1.email@gmail.com", email, subject, text);
+        emailService.sendMessage("ngoc2001bui@gmail.com", email, subject, text);
     }
+
 
     public ResponseEntity<?> kichHoatTaiKHoan(String email, String maKichHoat) {
         NguoiDung nguoiDung = nguoiDungRepository.findByEmail(email);
